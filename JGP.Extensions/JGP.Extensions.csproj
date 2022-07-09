@@ -10,7 +10,7 @@
 	  <Version>1.0.0</Version>
 	  <PackageId>JGP.Extensions</PackageId>
 	  <PackageDescription>Adds useful extensions for strings, collections etc</PackageDescription>
-	  <RepositoryUrl>https://github.com/gwynnPalmer/Extensions</RepositoryUrl>
+	  <RepositoryUrl>https://github.com/gwynnPalmer/JGP.Extensions</RepositoryUrl>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
