@@ -27,30 +27,14 @@ public static class DictionaryExtensions
     /// <param name="dictionary">The dictionary.</param>
     /// <param name="key">The key.</param>
     /// <param name="value">The value.</param>
-    /// <param name="syncRoot">The synchronize root.</param>
     /// <returns>IDictionary&lt;TKey, TValue&gt;.</returns>
     /// <exception cref="System.ArgumentNullException">dictionary</exception>
     public static IDictionary<TKey, TValue> AddIfNotContains<TKey, TValue>(
-        this IDictionary<TKey, TValue>? dictionary, TKey key, TValue value, object? syncRoot = null)
+        this IDictionary<TKey, TValue>? dictionary, TKey key, TValue value)
     {
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-        void AddIfNotContainsInternal()
-        {
-            if (!dictionary.ContainsKey(key)) dictionary[key] = value;
-        }
-
-        if (syncRoot != null)
-        {
-            lock (syncRoot)
-            {
-                AddIfNotContainsInternal();
-            }
-        }
-        else
-        {
-            AddIfNotContainsInternal();
-        }
+        if (!dictionary.ContainsKey(key)) dictionary[key] = value;
 
         return dictionary;
     }
@@ -63,25 +47,14 @@ public static class DictionaryExtensions
     /// <param name="dictionary">The dictionary.</param>
     /// <param name="key">The key.</param>
     /// <param name="value">The value.</param>
-    /// <param name="syncRoot">The synchronize root.</param>
     /// <returns>IDictionary&lt;TKey, TValue&gt;.</returns>
     /// <exception cref="System.ArgumentNullException">dictionary</exception>
     public static IDictionary<TKey, TValue> AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary,
-        TKey key, TValue value, object? syncRoot = null)
+        TKey key, TValue value)
     {
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-        if (syncRoot != null)
-        {
-            lock (syncRoot)
-            {
-                dictionary[key] = value;
-            }
-        }
-        else
-        {
-            dictionary[key] = value;
-        }
+        dictionary[key] = value;
 
         return dictionary;
     }
@@ -96,12 +69,11 @@ public static class DictionaryExtensions
     /// <param name="syncRoot">The synchronize root.</param>
     /// <returns>TValue?.</returns>
     /// <exception cref="System.ArgumentNullException">dictionary</exception>
-    public static TValue? Find<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary, TKey key,
-        object? syncRoot = null)
+    public static TValue? Find<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary, TKey key)
     {
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-        return dictionary.TryFind(key, out var value, syncRoot) ? value : default;
+        return dictionary.TryFind(key, out var value) ? value : default;
     }
 
     /// <summary>
@@ -111,15 +83,14 @@ public static class DictionaryExtensions
     /// <typeparam name="TValue">The type of the t value.</typeparam>
     /// <param name="dictionary">The dictionary.</param>
     /// <param name="keyMatchFunc">The key match function.</param>
-    /// <param name="syncRoot">The synchronize root.</param>
     /// <returns>TValue?.</returns>
     /// <exception cref="System.ArgumentNullException">dictionary</exception>
     public static TValue? Find<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary,
-        Func<TKey, bool> keyMatchFunc, object? syncRoot = null)
+        Func<TKey, bool> keyMatchFunc)
     {
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-        return dictionary.TryFind(keyMatchFunc, out var value, syncRoot) ? value : default;
+        return dictionary.TryFind(keyMatchFunc, out var value) ? value : default;
     }
 
     /// <summary>
@@ -130,15 +101,14 @@ public static class DictionaryExtensions
     /// <param name="dictionary">The dictionary.</param>
     /// <param name="key">The key.</param>
     /// <param name="onGetValueForAdd">The on get value for add.</param>
-    /// <param name="syncRoot">The synchronize root.</param>
     /// <returns>TValue.</returns>
     /// <exception cref="System.ArgumentNullException">dictionary</exception>
     public static TValue FindOrAdd<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary, TKey key,
-        Func<TValue> onGetValueForAdd, object? syncRoot = null)
+        Func<TValue> onGetValueForAdd)
     {
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-        return dictionary.FindOrAdd(key, onGetValueForAdd, null, syncRoot);
+        return dictionary.FindOrAdd(key, onGetValueForAdd, null);
     }
 
     /// <summary>
@@ -149,15 +119,14 @@ public static class DictionaryExtensions
     /// <param name="dictionary">The dictionary.</param>
     /// <param name="key">The key.</param>
     /// <param name="onGetValueForAdd">The on get value for add.</param>
-    /// <param name="syncRoot">The synchronize root.</param>
     /// <returns>TValue.</returns>
     /// <exception cref="System.ArgumentNullException">dictionary</exception>
     public static TValue FindOrAdd<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary, TKey key,
-        Func<TKey, TValue> onGetValueForAdd, object? syncRoot = null)
+        Func<TKey, TValue> onGetValueForAdd)
     {
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-        return dictionary.FindOrAdd(key, () => onGetValueForAdd.Invoke(key), null, syncRoot);
+        return dictionary.FindOrAdd(key, () => onGetValueForAdd.Invoke(key), null);
     }
 
     /// <summary>
@@ -169,20 +138,19 @@ public static class DictionaryExtensions
     /// <param name="key">The key.</param>
     /// <param name="onGetValueForAdd">The on get value for add.</param>
     /// <param name="onIsEqual">The on is equal.</param>
-    /// <param name="syncRoot">The synchronize root.</param>
     /// <returns>TValue.</returns>
     /// <exception cref="System.ArgumentNullException">dictionary</exception>
     public static TValue FindOrAdd<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary, TKey key,
-        Func<TValue> onGetValueForAdd, Func<TValue, bool>? onIsEqual, object? syncRoot = null)
+        Func<TValue> onGetValueForAdd, Func<TValue, bool>? onIsEqual)
     {
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-        var result = dictionary.Find(key, syncRoot);
+        var result = dictionary.Find(key);
 
         if (onIsEqual?.Invoke(result) ?? Equals(result, default))
         {
             result = onGetValueForAdd.Invoke();
-            dictionary.AddOrUpdate(key, result, syncRoot);
+            dictionary.AddOrUpdate(key, result);
         }
 
         return result;
@@ -258,30 +226,13 @@ public static class DictionaryExtensions
     /// <param name="dictionary">The dictionary.</param>
     /// <param name="key">The key.</param>
     /// <param name="value">The value.</param>
-    /// <param name="syncRoot">The synchronize root.</param>
-    /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+    /// <returns><c>true</c> if found, <c>false</c> otherwise.</returns>
     /// <exception cref="System.ArgumentNullException">dictionary</exception>
-    public static bool TryFind<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary, TKey key, out TValue? value,
-        object? syncRoot = null)
+    public static bool TryFind<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary, TKey key, out TValue? value)
     {
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-        bool result;
-        TValue valueForKey;
-
-        if (syncRoot != null)
-        {
-            lock (syncRoot)
-            {
-                result = dictionary.TryGetValue(key, out valueForKey);
-            }
-        }
-        else
-        {
-            result = dictionary.TryGetValue(key, out valueForKey);
-        }
-
-        value = valueForKey;
+        var result = dictionary.TryGetValue(key, out value);
 
         return result;
     }
@@ -295,32 +246,18 @@ public static class DictionaryExtensions
     /// <param name="dictionary">The dictionary.</param>
     /// <param name="keyMatchFunc">The key match function.</param>
     /// <param name="value">The value.</param>
-    /// <param name="syncRoot">The synchronize root.</param>
     /// <returns><c>true</c> if found, <c>false</c> otherwise.</returns>
     /// <exception cref="System.ArgumentNullException">dictionary</exception>
     public static bool TryFind<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary,
-        Func<TKey, bool> keyMatchFunc, out TValue value, object? syncRoot = null)
+        Func<TKey, bool> keyMatchFunc, out TValue value)
     {
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-        bool result;
-        TValue valueForKey = default;
+        TValue keyValue = default;
+        var key = dictionary.Keys.FirstOrDefault(keyMatchFunc);
+        var result = key != null && dictionary.TryGetValue(key, out keyValue);
 
-        bool FindInternal()
-        {
-            var key = dictionary.Keys.FirstOrDefault(keyMatchFunc);
-            return key != null && dictionary.TryGetValue(key, out valueForKey);
-        }
-
-        if (syncRoot != null)
-            lock (syncRoot)
-            {
-                result = FindInternal();
-            }
-        else
-            result = FindInternal();
-
-        value = valueForKey;
+        value = keyValue;
 
         return result;
     }
@@ -332,24 +269,19 @@ public static class DictionaryExtensions
     /// <typeparam name="TValue">The type of the t value.</typeparam>
     /// <param name="dictionary">The dictionary.</param>
     /// <param name="key">The key.</param>
-    /// <param name="syncRoot">The synchronize root.</param>
     /// <returns><c>true</c> if item is removed, <c>false</c> otherwise.</returns>
     /// <exception cref="System.ArgumentNullException">dictionary</exception>
-    public static bool TryRemove<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary, TKey key,
-        object? syncRoot = null)
+    public static bool TryRemove<TKey, TValue>(this IDictionary<TKey, TValue>? dictionary, TKey key)
     {
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-        bool result;
-
-        if (syncRoot != null)
-            lock (syncRoot)
-            {
-                result = dictionary.Remove(key);
-            }
-        else
-            result = dictionary.Remove(key);
-
-        return result;
+        try
+        {
+            return dictionary.Remove(key);
+        }
+        catch (Exception )
+        {
+            return false;
+        }
     }
 }

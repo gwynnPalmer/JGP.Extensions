@@ -87,79 +87,79 @@ namespace JGP.Extensions.Strings
             return Regex.Matches(value, stringToMatch, RegexOptions.IgnoreCase).Count;
         }
 
-        /// <summary>
-        ///     Convert string to Hash using MD5
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>System.String.</returns>
-        public static string CreateHashMD5(this string value)
-        {
-            // Use input string to calculate MD5 hash
-            using var md5 = MD5.Create();
-            var inputBytes = Encoding.ASCII.GetBytes(value);
-            var hashBytes = md5.ComputeHash(inputBytes);
+        ///// <summary>
+        /////     Convert string to Hash using MD5
+        ///// </summary>
+        ///// <param name="value">The value.</param>
+        ///// <returns>System.String.</returns>
+        //public static string CreateHashMD5(this string value)
+        //{
+        //    // Use input string to calculate MD5 hash
+        //    using var md5 = MD5.Create();
+        //    var inputBytes = Encoding.ASCII.GetBytes(value);
+        //    var hashBytes = md5.ComputeHash(inputBytes);
 
-            // Convert the byte array to hexadecimal string
-            var stringBuilder = new StringBuilder();
-            foreach (var b in hashBytes) stringBuilder.Append(b.ToString("X2"));
-            return stringBuilder.ToString();
-        }
+        //    // Convert the byte array to hexadecimal string
+        //    var stringBuilder = new StringBuilder();
+        //    foreach (var b in hashBytes) stringBuilder.Append(b.ToString("X2"));
+        //    return stringBuilder.ToString();
+        //}
 
-        /// <summary>
-        ///     Convert string to Hash using Sha256
-        /// </summary>
-        /// <param name="value">string to hash</param>
-        /// <returns>Hashed string</returns>
-        /// <exception cref="System.ArgumentNullException">value</exception>
-        public static string CreateHashSha256(this string value)
-        {
-            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(nameof(value));
-            var stringBuilder = new StringBuilder();
-            using (var hash = SHA256.Create())
-            {
-                var bytes = hash.ComputeHash(value.ToBytes());
-                foreach (var b in bytes) stringBuilder.Append(b.ToString("x2"));
-            }
+        ///// <summary>
+        /////     Convert string to Hash using Sha256
+        ///// </summary>
+        ///// <param name="value">string to hash</param>
+        ///// <returns>Hashed string</returns>
+        ///// <exception cref="System.ArgumentNullException">value</exception>
+        //public static string CreateHashSha256(this string value)
+        //{
+        //    if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(nameof(value));
+        //    var stringBuilder = new StringBuilder();
+        //    using (var hash = SHA256.Create())
+        //    {
+        //        var bytes = hash.ComputeHash(value.ToBytes());
+        //        foreach (var b in bytes) stringBuilder.Append(b.ToString("x2"));
+        //    }
 
-            return stringBuilder.ToString();
-        }
+        //    return stringBuilder.ToString();
+        //}
 
-        /// <summary>
-        ///     Convert string to Hash using Sha512
-        /// </summary>
-        /// <param name="value">string to hash</param>
-        /// <returns>Hashed string</returns>
-        /// <exception cref="System.ArgumentNullException">value</exception>
-        public static string CreateHashSha512(this string value)
-        {
-            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(nameof(value));
-            var stringBuilder = new StringBuilder();
-            using (var hash = SHA512.Create())
-            {
-                var bytes = hash.ComputeHash(value.ToBytes());
-                foreach (var b in bytes) stringBuilder.Append(b.ToString("x2"));
-            }
+        ///// <summary>
+        /////     Convert string to Hash using Sha512
+        ///// </summary>
+        ///// <param name="value">string to hash</param>
+        ///// <returns>Hashed string</returns>
+        ///// <exception cref="System.ArgumentNullException">value</exception>
+        //public static string CreateHashSha512(this string value)
+        //{
+        //    if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(nameof(value));
+        //    var stringBuilder = new StringBuilder();
+        //    using (var hash = SHA512.Create())
+        //    {
+        //        var bytes = hash.ComputeHash(value.ToBytes());
+        //        foreach (var b in bytes) stringBuilder.Append(b.ToString("x2"));
+        //    }
 
-            return stringBuilder.ToString();
-        }
+        //    return stringBuilder.ToString();
+        //}
 
-        /// <summary>
-        ///     Decrypt a string using the supplied key. Decoding is done using RSA encryption.
-        /// </summary>
-        /// <param name="stringToDecrypt">String that must be decrypted.</param>
-        /// <param name="key">Decryption key.</param>
-        /// <returns>The decrypted string or null if decryption failed.</returns>
-        /// <exception cref="ArgumentException">Occurs when stringToDecrypt or key is null or empty.</exception>
-        public static string Decrypt(this string stringToDecrypt, string key)
-        {
-            var cspParameters = new CspParameters { KeyContainerName = key };
-            var rsaServiceProvider = new RSACryptoServiceProvider(cspParameters) { PersistKeyInCsp = true };
-            var decryptArray = stringToDecrypt.Split(new[] { "-" }, StringSplitOptions.None);
-            var decryptByteArray =
-                Array.ConvertAll(decryptArray, s => Convert.ToByte(byte.Parse(s, NumberStyles.HexNumber)));
-            var bytes = rsaServiceProvider.Decrypt(decryptByteArray, true);
-            return Encoding.UTF8.GetString(bytes);
-        }
+        ///// <summary>
+        /////     Decrypt a string using the supplied key. Decoding is done using RSA encryption.
+        ///// </summary>
+        ///// <param name="stringToDecrypt">String that must be decrypted.</param>
+        ///// <param name="key">Decryption key.</param>
+        ///// <returns>The decrypted string or null if decryption failed.</returns>
+        ///// <exception cref="ArgumentException">Occurs when stringToDecrypt or key is null or empty.</exception>
+        //public static string Decrypt(this string stringToDecrypt, string key)
+        //{
+        //    var cspParameters = new CspParameters { KeyContainerName = key };
+        //    var rsaServiceProvider = new RSACryptoServiceProvider(cspParameters) { PersistKeyInCsp = true };
+        //    var decryptArray = stringToDecrypt.Split(new[] { "-" }, StringSplitOptions.None);
+        //    var decryptByteArray =
+        //        Array.ConvertAll(decryptArray, s => Convert.ToByte(byte.Parse(s, NumberStyles.HexNumber)));
+        //    var bytes = rsaServiceProvider.Decrypt(decryptByteArray, true);
+        //    return Encoding.UTF8.GetString(bytes);
+        //}
 
         /// <summary>
         ///     Check if a string does not end with prefix
@@ -187,20 +187,20 @@ namespace JGP.Extensions.Strings
                    || !value.StartsWith(prefix, StringComparison.InvariantCulture);
         }
 
-        /// <summary>
-        ///     Encrypt a string using the supplied key. Encoding is done using RSA encryption.
-        /// </summary>
-        /// <param name="stringToEncrypt">String that must be encrypted.</param>
-        /// <param name="key">Encryption key</param>
-        /// <returns>A string representing a byte array separated by a minus sign.</returns>
-        /// <exception cref="ArgumentException">Occurs when stringToEncrypt or key is null or empty.</exception>
-        public static string Encrypt(this string stringToEncrypt, string key)
-        {
-            var cspParameter = new CspParameters { KeyContainerName = key };
-            var rsaServiceProvider = new RSACryptoServiceProvider(cspParameter) { PersistKeyInCsp = true };
-            var bytes = rsaServiceProvider.Encrypt(Encoding.UTF8.GetBytes(stringToEncrypt), true);
-            return BitConverter.ToString(bytes);
-        }
+        ///// <summary>
+        /////     Encrypt a string using the supplied key. Encoding is done using RSA encryption.
+        ///// </summary>
+        ///// <param name="stringToEncrypt">String that must be encrypted.</param>
+        ///// <param name="key">Encryption key</param>
+        ///// <returns>A string representing a byte array separated by a minus sign.</returns>
+        ///// <exception cref="ArgumentException">Occurs when stringToEncrypt or key is null or empty.</exception>
+        //public static string Encrypt(this string stringToEncrypt, string key)
+        //{
+        //    var cspParameter = new CspParameters { KeyContainerName = key };
+        //    var rsaServiceProvider = new RSACryptoServiceProvider(cspParameter) { PersistKeyInCsp = true };
+        //    var bytes = rsaServiceProvider.Encrypt(Encoding.UTF8.GetBytes(stringToEncrypt), true);
+        //    return BitConverter.ToString(bytes);
+        //}
 
         /// <summary>
         ///     Check a String ends with another string ignoring the case.
@@ -212,8 +212,8 @@ namespace JGP.Extensions.Strings
         /// <exception cref="System.ArgumentNullException">suffix - suffix parameter is null</exception>
         public static bool EndsWithIgnoreCase(this string value, string suffix)
         {
-            if (value == null) throw new ArgumentNullException("value", "value parameter is null");
-            if (suffix == null) throw new ArgumentNullException("suffix", "suffix parameter is null");
+            if (value == null) throw new ArgumentNullException(nameof(value), "value parameter is null");
+            if (suffix == null) throw new ArgumentNullException(nameof(suffix), "suffix parameter is null");
             return value.Length >= suffix.Length && value.EndsWith(suffix, StringComparison.InvariantCultureIgnoreCase);
         }
 
@@ -268,28 +268,28 @@ namespace JGP.Extensions.Strings
             return value.Length > 0 ? value : defaultValue;
         }
 
-        /// <summary>
-        ///     Gets a deterministic hash code for a string value.
-        /// </summary>
-        /// <param name="value">The string.</param>
-        /// <returns>System.Int32.</returns>
-        public static int GetDeterministicHashCode(this string value)
-        {
-            unchecked
-            {
-                var hash1 = (5381 << 16) + 5381;
-                var hash2 = hash1;
+        ///// <summary>
+        /////     Gets a deterministic hash code for a string value.
+        ///// </summary>
+        ///// <param name="value">The string.</param>
+        ///// <returns>System.Int32.</returns>
+        //public static int GetDeterministicHashCode(this string value)
+        //{
+        //    unchecked
+        //    {
+        //        var hash1 = (5381 << 16) + 5381;
+        //        var hash2 = hash1;
 
-                for (var i = 0; i < value.Length; i += 2)
-                {
-                    hash1 = ((hash1 << 5) + hash1) ^ value[i];
-                    if (i == value.Length - 1) break;
-                    hash2 = ((hash2 << 5) + hash2) ^ value[i + 1];
-                }
+        //        for (var i = 0; i < value.Length; i += 2)
+        //        {
+        //            hash1 = ((hash1 << 5) + hash1) ^ value[i];
+        //            if (i == value.Length - 1) break;
+        //            hash2 = ((hash2 << 5) + hash2) ^ value[i + 1];
+        //        }
 
-                return hash1 + hash2 * 1566083941;
-            }
-        }
+        //        return hash1 + hash2 * 1566083941;
+        //    }
+        //}
 
         /// <summary>
         ///     Gets empty String if passed value is of type Null/Nothing
@@ -555,7 +555,7 @@ namespace JGP.Extensions.Strings
         /// <returns>System.Nullable&lt;System.String&gt;.</returns>
         public static string? RemoveCharacters(this string? value, params char[] chars)
         {
-            if (value.IsNullOrWhiteSpace()) return null;
+            if (value.IsNullOrWhiteSpace()) return value;
             if (chars.Length <= 0) return value;
             var stringBuilder = new StringBuilder(value!.Length);
             foreach (var character in value.Where(c => !chars.Contains(c))) stringBuilder.Append(character);
@@ -584,6 +584,7 @@ namespace JGP.Extensions.Strings
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
+        
         /// <summary>
         ///     Removes the first part of the string, if no match found return original string
         /// </summary>
@@ -688,17 +689,17 @@ namespace JGP.Extensions.Strings
             return val.Length >= prefix.Length && val.StartsWith(prefix, StringComparison.InvariantCultureIgnoreCase);
         }
 
-        /// <summary>
-        ///     Convert a string to its equivalent byte array
-        /// </summary>
-        /// <param name="value">string to convert</param>
-        /// <returns>System.byte array</returns>
-        public static byte[] ToBytes(this string value)
-        {
-            var bytes = new byte[value.Length * sizeof(char)];
-            Buffer.BlockCopy(value.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return bytes;
-        }
+        ///// <summary>
+        /////     Convert a string to its equivalent byte array
+        ///// </summary>
+        ///// <param name="value">string to convert</param>
+        ///// <returns>System.byte array</returns>
+        //public static byte[] ToBytes(this string value)
+        //{
+        //    var bytes = new byte[value.Length * sizeof(char)];
+        //    Buffer.BlockCopy(value.ToCharArray(), 0, bytes, 0, bytes.Length);
+        //    return bytes;
+        //}
 
         /// <summary>
         ///     Converts string to its Enum type

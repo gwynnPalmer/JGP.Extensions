@@ -1287,7 +1287,7 @@ public class StringExtensionsTests
     {
         var value = string.Empty;
         var test = value.RemoveCharacters('a');
-        test.Should().BeNull();
+        test.Should().Be(value);
     }
 
     /// <summary>

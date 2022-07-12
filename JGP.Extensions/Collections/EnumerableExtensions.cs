@@ -91,7 +91,6 @@ namespace JGP.Extensions.Collections
             Action<IEnumerable<T>> batchAction)
         {
             if (collection == null) throw new ArgumentNullException(nameof(collection));
-
             if (batchAction == null) throw new ArgumentNullException(nameof(batchAction));
 
             var list = new List<T>(batchSize);
