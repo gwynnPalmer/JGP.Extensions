@@ -68,16 +68,10 @@ public static class HttpRequestMessageExtensions
     /// <exception cref="System.ArgumentNullException">request</exception>
     public static string? GetQueryStringValue(this HttpRequestMessage request, string key, string? defaultValue = null)
     {
-        if (request == null)
-        {
-            throw new ArgumentNullException(nameof(request));
-        }
+        if (request == null) throw new ArgumentNullException(nameof(request));
 
         var requestUri = request.RequestUri;
-        if (!requestUri.HasValue())
-        {
-            return defaultValue;
-        }
+        if (!requestUri.HasValue()) return defaultValue;
 
         var collection = HttpUtility.ParseQueryString(requestUri!.Query);
         return collection.ToPairs()

@@ -26,22 +26,6 @@ namespace JGP.Extensions.Tests;
 public class StringExtensionsTests
 {
     /// <summary>
-    ///     Enum EnumTest
-    /// </summary>
-    private enum EnumTest
-    {
-        /// <summary>
-        ///     The value
-        /// </summary>
-        Value = 0,
-
-        /// <summary>
-        ///     The result
-        /// </summary>
-        result = 1
-    }
-
-    /// <summary>
     ///     Defines the test method AppendPrefixIfMissing_MissingPrefix.
     /// </summary>
     [Test]
@@ -136,10 +120,9 @@ public class StringExtensionsTests
     [Test]
     public void AppendSuffixIfMissing_SuffixPresent_NotIgnoreCase()
     {
-        var value = "value";
-        var suffix = "suffix";
-
-        var test = value += suffix;
+        const string value = "value";
+        const string suffix = "suffix";
+        const string test = value + suffix;
 
         var appendedValue = test.AppendSuffixIfMissing(suffix, false);
 
@@ -215,7 +198,7 @@ public class StringExtensionsTests
     [Test]
     public void DoesNotEndWith_SuffixNull()
     {
-        var value = "value";
+        const string value = "value";
         string? suffix = null;
 
         var ends = value.DoesNotEndWith(suffix);
@@ -1547,29 +1530,6 @@ public class StringExtensionsTests
         string? value = null;
         var action = () => value.StartsWithIgnoreCase("prefix");
         action.Should().Throw<ArgumentNullException>();
-    }
-
-    /// <summary>
-    ///     Defines the test method ToEnum_TEnum.
-    /// </summary>
-    [Test]
-    public void ToEnum_TEnum()
-    {
-        var value = "Value";
-
-        var test = value.ToEnum<EnumTest>();
-        test.Should().Be(EnumTest.Value);
-    }
-
-    /// <summary>
-    ///     Defines the test method ToEnum_TNotEnum.
-    /// </summary>
-    [Test]
-    public void ToEnum_TNotEnum()
-    {
-        var value = "value";
-        Action action = () => value.ToEnum<int>();
-        action.Should().Throw<ArgumentException>();
     }
 
     /// <summary>

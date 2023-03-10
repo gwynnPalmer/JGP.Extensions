@@ -1,21 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-	  <Description>Adds useful extensions for strings, collections etc</Description>
-	  <Authors>Joshua Gwynn-Palmer</Authors>
-	  <Copyright>Joshua Gwynn-Palmer</Copyright>
-	  <Version>1.0.0</Version>
-	  <PackageId>JGP.Extensions</PackageId>
-	  <PackageDescription>Adds useful extensions for strings, collections etc</PackageDescription>
-	  <RepositoryUrl>https://github.com/gwynnPalmer/JGP.Extensions</RepositoryUrl>
-	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Description>Adds useful extensions for strings, collections etc</Description>
+        <Authors>Joshua Gwynn-Palmer</Authors>
+        <Copyright>Joshua Gwynn-Palmer</Copyright>
+        <Version>1.0.0</Version>
+        <PackageId>JGP.Extensions</PackageId>
+        <PackageDescription>Adds useful extensions for strings, collections etc</PackageDescription>
+        <RepositoryUrl>https://github.com/gwynnPalmer/JGP.Extensions</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\README.md" Pack="True" PackagePath="\" />
+        <None Include="..\LICENSE.md" Pack="True" PackagePath="\" />
+    </ItemGroup>
 
 </Project>

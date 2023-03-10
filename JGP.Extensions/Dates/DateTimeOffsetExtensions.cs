@@ -22,7 +22,7 @@ namespace JGP.Extensions.Dates
         /// <summary>
         ///     The random
         /// </summary>
-        private static readonly Random Rnd = new();
+        private static readonly Random Random = new();
 
         /// <summary>
         ///     Adds weeks to the specific date.
@@ -116,7 +116,7 @@ namespace JGP.Extensions.Dates
         public static DateTimeOffset GenerateRandom(DateTimeOffset from, DateTimeOffset to)
         {
             var range = to - from;
-            var randTimeSpan = new TimeSpan((long)(Rnd.NextDouble() * range.Ticks));
+            var randTimeSpan = new TimeSpan((long)(Random.NextDouble() * range.Ticks));
             return from + randTimeSpan;
         }
 
@@ -175,8 +175,7 @@ namespace JGP.Extensions.Dates
             bool ignoreUtcOffset = false)
         {
             var diff = dateTime.DayOfWeek - startOfWeek;
-            if (diff < 0)
-                diff += 7;
+            if (diff < 0) diff += 7;
 
             return dateTime.StartOfDay(ignoreUtcOffset).SafeSubtract(TimeSpan.FromDays(diff));
         }
@@ -201,8 +200,7 @@ namespace JGP.Extensions.Dates
         /// <returns>DateTimeOffset.</returns>
         private static DateTimeOffset SafeAdd(this DateTimeOffset dateTime, TimeSpan value)
         {
-            if (dateTime.Ticks + value.Ticks < DateTime.MinValue.Ticks)
-                return DateTime.MinValue;
+            if (dateTime.Ticks + value.Ticks < DateTime.MinValue.Ticks) return DateTime.MinValue;
 
             return dateTime.Ticks + value.Ticks > DateTime.MaxValue.Ticks ? DateTime.MaxValue : dateTime.Add(value);
         }
@@ -215,8 +213,7 @@ namespace JGP.Extensions.Dates
         /// <returns>DateTimeOffset.</returns>
         private static DateTimeOffset SafeSubtract(this DateTimeOffset dateTime, TimeSpan value)
         {
-            if (dateTime.Ticks - value.Ticks < DateTime.MinValue.Ticks)
-                return DateTime.MinValue;
+            if (dateTime.Ticks - value.Ticks < DateTime.MinValue.Ticks) return DateTime.MinValue;
 
             return dateTime.Ticks - value.Ticks > DateTime.MaxValue.Ticks
                 ? DateTime.MaxValue

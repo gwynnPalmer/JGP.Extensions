@@ -35,7 +35,6 @@ public static class DictionaryExtensions
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
         if (!dictionary.ContainsKey(key)) dictionary[key] = value;
-
         return dictionary;
     }
 
@@ -55,7 +54,6 @@ public static class DictionaryExtensions
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
         dictionary[key] = value;
-
         return dictionary;
     }
 
@@ -232,9 +230,7 @@ public static class DictionaryExtensions
     {
         if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 
-        var result = dictionary.TryGetValue(key, out value);
-
-        return result;
+        return dictionary.TryGetValue(key, out value);
     }
 
 
@@ -258,7 +254,6 @@ public static class DictionaryExtensions
         var result = key != null && dictionary.TryGetValue(key, out keyValue);
 
         value = keyValue;
-
         return result;
     }
 

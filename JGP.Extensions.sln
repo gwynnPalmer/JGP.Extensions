@@ -8,6 +8,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6AC2B7F2-3B2E-482D-966C-3D838DC18DE3}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.md = LICENSE.md
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		README.md = README.md
+		.github\workflows\nuget-build.yml = .github\workflows\nuget-build.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{70213914-50BD-43E5-97EE-0BAF572C9B1A}"
