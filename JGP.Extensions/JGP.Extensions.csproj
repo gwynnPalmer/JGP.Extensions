@@ -7,12 +7,13 @@
         <Description>Adds useful extensions for strings, collections etc</Description>
         <Authors>Joshua Gwynn-Palmer</Authors>
         <Copyright>Joshua Gwynn-Palmer</Copyright>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
         <PackageId>JGP.Extensions</PackageId>
         <PackageDescription>Adds useful extensions for strings, collections etc</PackageDescription>
         <RepositoryUrl>https://github.com/gwynnPalmer/JGP.Extensions</RepositoryUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     </PropertyGroup>
 
     <ItemGroup>
