@@ -7,7 +7,7 @@
         <Description>Adds useful extensions for strings, collections etc</Description>
         <Authors>Joshua Gwynn-Palmer</Authors>
         <Copyright>Joshua Gwynn-Palmer</Copyright>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
         <PackageId>JGP.Extensions</PackageId>
         <PackageDescription>Adds useful extensions for strings, collections etc</PackageDescription>
         <RepositoryUrl>https://github.com/gwynnPalmer/JGP.Extensions</RepositoryUrl>
@@ -17,7 +17,7 @@
 
     <ItemGroup>
         <None Include="..\README.md" Pack="True" PackagePath="\" />
-        <None Include="..\LICENSE.md" Pack="True" PackagePath="\" />
+        <None Include="..\LICENSE.txt" Pack="True" PackagePath="\" />
     </ItemGroup>
 
 </Project>

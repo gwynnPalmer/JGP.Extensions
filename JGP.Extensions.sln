@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JGP.Extensions", "JGP.Exten
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6AC2B7F2-3B2E-482D-966C-3D838DC18DE3}"
 	ProjectSection(SolutionItems) = preProject
-		LICENSE.md = LICENSE.md
+		LICENSE.txt = LICENSE.txt
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		README.md = README.md
